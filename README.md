@@ -40,16 +40,17 @@ console .log us2
 
 注意：目前该接口针对非个人开发者，且完成了认证的小程序开放（不包含海外主体）。需谨慎使用，若用户举报较多或被发现在不必要场景下使用，微信有权永久回收该小程序的该接口权限。
 
+
 因为解密手机号需要：APPID、session_key、encryptedData、iv；
-● session_key由接口wx.login请求到的code，再通过https://api.weixin.qq.com/sns/jscode2session?得到
-● APPID
-● encryptedData 由云开发接口 或 登录按钮等得
-● iv  由云开发接口 或 登录按钮等得
+- session_key由接口wx.login请求到的code，再通过https://api.weixin.qq.com/sns/jscode2session?得到
+-  APPID
+-  encryptedData 由云开发接口 或 登录按钮等得
+-  iv  由云开发接口 或 登录按钮等得
 
 
 1. 获取session_key：
 调用wx.login接口，并申请https://api.weixin.qq.com/sns/jscode2session。
-
+```
    onShow: function () {
         let that = this;
         // 判断是否缓存手机号
@@ -94,7 +95,7 @@ console .log us2
 
     },
 
-
+```
 
 2. button组件
 因为需要用户主动触发才能发起获取手机号接口，所以该功能不由 API 来调用，需用 button 组件的点击来触发。
@@ -102,6 +103,7 @@ console .log us2
 <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">立即绑定</button>
 
 // 获取手机号
+```
     getPhoneNumber: function (e) {
         console.log(e)
         var that = this
@@ -115,8 +117,10 @@ console .log us2
           
         }
     },
+   ```
 3. 解密：
 3.1 新建WXBizDataCrypt.js
+```
 /**
  * Created by rd on 2017/5/4.
  */
@@ -164,6 +168,6 @@ RdWXBizDataCrypt.prototype.decryptData = function (encryptedData, iv) {
 
 module.exports = RdWXBizDataCrypt
 
-
+```
 3.2 找一个解密crypto,可直接下载我提供的
 
